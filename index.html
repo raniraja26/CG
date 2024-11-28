@@ -14,25 +14,30 @@ html, body {
     background: #000;
     color: white;
     text-align: center;
+    overflow: hidden;
 }
 
 .video-container {
     position: relative;
     width: 90%;
+    max-width: 800px;
     margin: 20px auto;
     border: 2px solid #28B463;
     border-radius: 10px;
     overflow: hidden;
 }
 
-.video {
+video {
     width: 100%;
+    height: auto;
     border-radius: 10px;
     transition: transform 0.5s ease;
 }
 
 .fullscreen-rotate {
     transform: rotate(90deg);
+    width: auto;
+    height: 100%;
 }
 
 .fullscreen-btn {
@@ -50,6 +55,53 @@ html, body {
 .fullscreen-btn:hover {
     background-color: #1f9e4d;
 }
+
+/* Popup Styling */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    z-index: 10000; /* Ensure it appears above all content */
+    padding: 30px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.popup h2 {
+    font-size: 22px;
+    margin: 0 0 20px 0;
+}
+
+.popup button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.popup button:hover {
+    background: #28B463;
+    color: white;
+}
+
+.popup .close-btn {
+    background: #f44336;
+    color: white;
+}
+
+/* Disable interaction with the rest of the page while popup is active */
+body.no-scroll {
+    overflow: hidden;
+}
 </style>
 </head>
 <body>
@@ -62,33 +114,59 @@ html, body {
 
 <button id="fullscreenButton" class="fullscreen-btn">Fullscreen & Rotate</button>
 
+<!-- Popup -->
+<div class="popup" id="popup">
+    <h2>Support Us!</h2>
+    <p>Join our Telegram channel @cricketguru071 for more updates.</p>
+    <button id="joinButton">Join Now</button>
+    <button id="closeButton" class="close-btn">Already Joined</button>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const video = document.querySelector(".video");
+    const video = document.getElementById("videoPlayer");
     const fullscreenButton = document.getElementById("fullscreenButton");
+    const popup = document.getElementById("popup");
     let isFullscreen = false;
 
-    // Add click event to the fullscreen button
+    // Show the popup on page load
+    window.addEventListener("load", () => {
+        document.body.classList.add("no-scroll");
+        popup.style.display = "block";
+    });
+
+    // Close the popup
+    document.getElementById("closeButton").addEventListener("click", () => {
+        popup.style.display = "none";
+        document.body.classList.remove("no-scroll");
+    });
+
+    // Redirect to Telegram on "Join Now"
+    document.getElementById("joinButton").addEventListener("click", () => {
+        window.location.href = "https://t.me/+xl-C7GFGTkM4MDk5";
+    });
+
+    // Add fullscreen and rotate functionality
     fullscreenButton.addEventListener("click", () => {
         if (!isFullscreen) {
-            // Enter fullscreen mode
+            // Enter fullscreen
             if (video.requestFullscreen) {
                 video.requestFullscreen();
-            } else if (video.webkitRequestFullscreen) { // Safari
-                video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { // IE11
-                video.msRequestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen(); // Safari
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen(); // IE11
             }
 
-            // Add rotation
+            // Rotate the video
             video.classList.add("fullscreen-rotate");
         } else {
-            // Exit fullscreen mode
+            // Exit fullscreen
             if (document.exitFullscreen) {
                 document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) { // Safari
+            } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { // IE11
+            } else if (document.msExitFullscreen) {
                 document.msExitFullscreen();
             }
 
@@ -96,24 +174,25 @@ document.addEventListener("DOMContentLoaded", () => {
             video.classList.remove("fullscreen-rotate");
         }
 
-        // Toggle fullscreen state
         isFullscreen = !isFullscreen;
     });
 
-    // Update video source dynamically if "dtv" query parameter is provided
+    // Load video source from the "CG" query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const videoSrc = urlParams.get("dtv");
+    const videoSrc = urlParams.get("CG");
     if (videoSrc) {
         document.getElementById("m3u8-url").src = videoSrc;
-        const hlsConfig = { maxMaxBufferLength: 100 };
 
-        // Initialize HLS.js if supported
+        // Use HLS.js to play the video if HLS is supported
         if (Hls.isSupported()) {
-            const hls = new Hls(hlsConfig);
+            const hls = new Hls();
             hls.loadSource(videoSrc);
             hls.attachMedia(video);
         }
     }
+
+    // Initialize Plyr.js for the video
+    const player = new Plyr(video);
 });
 </script>
 
