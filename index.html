@@ -36,7 +36,7 @@ html, body {
     transition: transform 0.5s ease; /* Smooth rotation transition */
 }
 
-.rotate-btn {
+.fullscreen-btn {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #28B463;
@@ -48,7 +48,7 @@ html, body {
     transition: background 0.3s ease;
 }
 
-.rotate-btn:hover {
+.fullscreen-btn:hover {
     background: #1f9e4d;
 }
 
@@ -127,10 +127,6 @@ body.no-scroll {
     overflow: hidden;
 }
 
-/* Fullscreen button next to controls */
-.plyr__controls .plyr__control.plyr__fullscreen {
-    margin-left: 10px;
-}
 </style>
 
 <script>
@@ -198,9 +194,6 @@ body.no-scroll {
                                 }
                             });
                         }
-                    },
-                    fullscreen: {
-                        enabled: true,
                     }
                 });
             });
@@ -209,18 +202,24 @@ body.no-scroll {
         }
     });
 
-    // Function to rotate the video when the rotate button is clicked
+    // Function to enter fullscreen and rotate the video when the fullscreen button is clicked
     let rotateAngle = 0;
-    document.getElementById('rotateButton').addEventListener('click', function() {
-        rotateAngle += 90; // Rotate 90 degrees on each click
+    document.getElementById('fullscreenButton').addEventListener('click', function() {
         const videoElement = document.querySelector('.video');
-        videoElement.style.transform = `rotate(${rotateAngle}deg)`; // Apply the rotation
-    });
 
-    // Handling mobile orientation changes
-    window.addEventListener('orientationchange', function() {
-        if (window.innerHeight > window.innerWidth) {
-            document.querySelector('.video').style.transform = 'rotate(0deg)';
+        // Rotate the video by 90 degrees
+        rotateAngle += 90;
+        videoElement.style.transform = `rotate(${rotateAngle}deg)`; 
+
+        // Go fullscreen
+        if (videoElement.requestFullscreen) {
+            videoElement.requestFullscreen();
+        } else if (videoElement.mozRequestFullScreen) { // Firefox
+            videoElement.mozRequestFullScreen();
+        } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            videoElement.webkitRequestFullscreen();
+        } else if (videoElement.msRequestFullscreen) { // IE/Edge
+            videoElement.msRequestFullscreen();
         }
     });
 
@@ -233,7 +232,7 @@ body.no-scroll {
     <source id="m3u8-url" src="" type="application/x-mpegURL" />
 </video>
 
-<button id="rotateButton" class="rotate-btn">Rotate Video</button>
+<button id="fullscreenButton" class="fullscreen-btn">Fullscreen & Rotate Video</button>
 
 <div class="youtube-link">
     <a href="https://t.me/+xl-C7GFGTkM4MDk5" target="_blank">Join our Telegram Channel</a>
