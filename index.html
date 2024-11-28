@@ -126,6 +126,11 @@ marquee h2 {
 body.no-scroll {
     overflow: hidden;
 }
+
+/* Fullscreen button next to controls */
+.plyr__controls .plyr__control.plyr__fullscreen {
+    margin-left: 10px;
+}
 </style>
 
 <script>
@@ -193,6 +198,9 @@ body.no-scroll {
                                 }
                             });
                         }
+                    },
+                    fullscreen: {
+                        enabled: true,
                     }
                 });
             });
