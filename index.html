@@ -33,6 +33,23 @@ html, body {
     display: block;
     border: 2px solid #28B463;
     border-radius: 10px;
+    transition: transform 0.5s; /* Smooth transition for rotation */
+}
+
+.rotate-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28B463;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.rotate-btn:hover {
+    background: #1f9e4d;
 }
 
 .youtube-link {
@@ -183,13 +200,24 @@ body.no-scroll {
             new Plyr(video);
         }
     });
+
+    // Function to rotate the video when the rotate button is clicked
+    let rotateAngle = 0;
+    document.getElementById('rotateButton').addEventListener('click', function() {
+        rotateAngle += 90; // Rotate 90 degrees on each click
+        const videoElement = document.querySelector('.video');
+        videoElement.style.transform = `rotate(${rotateAngle}deg)`; // Apply the rotation
+    });
 </script>
+
 </head>
 <body>
 
 <video class="video" autoplay controls crossorigin poster="https://graph.org/file/f7df3ed4a92c7ee46ba4d-fc92b8b889ddba640e.jpg">
     <source id="m3u8-url" src="" type="application/x-mpegURL" />
 </video>
+
+<button id="rotateButton" class="rotate-btn">Rotate Video</button>
 
 <div class="youtube-link">
     <a href="https://t.me/+xl-C7GFGTkM4MDk5" target="_blank">Join our Telegram Channel</a>
