@@ -81,11 +81,24 @@ marquee h2 {
 
     // Rotate button functionality
     let rotationAngle = 0;
+
     function rotateVideo() {
         rotationAngle = (rotationAngle + 90) % 360; // Increment by 90 degrees
         const video = document.querySelector('video');
         video.style.transform = `rotate(${rotationAngle}deg)`;
         video.style.transition = 'transform 0.3s ease'; // Smooth transition
+    }
+
+    // Handle full screen events
+    function onFullScreenChange() {
+        const video = document.querySelector('video');
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+            // In fullscreen mode, apply rotation logic if necessary
+            video.style.transform = `rotate(${rotationAngle}deg)`; // Ensure the rotation is preserved in full-screen
+        } else {
+            // When exiting full-screen, maintain the rotation
+            video.style.transform = `rotate(${rotationAngle}deg)`;
+        }
     }
 
     // Video player initialization
@@ -128,6 +141,12 @@ marquee h2 {
 
                 const controlBar = player.elements.controls;
                 controlBar.appendChild(rotateButton);
+
+                // Listen for full-screen changes
+                document.addEventListener('fullscreenchange', onFullScreenChange);
+                document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+                document.addEventListener('mozfullscreenchange', onFullScreenChange);
+                document.addEventListener('msfullscreenchange', onFullScreenChange);
             });
         } else {
             new Plyr(video);
