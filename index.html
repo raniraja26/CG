@@ -2,38 +2,37 @@
 <html>
 <head>
 <title>CRICKET GURU</title>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="description" content="ENJOY FREE LIVE">
-<meta name="keywords" content="SPORTS">
-<meta name="author" content="Cricket Guru">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/37fVLxB/f4027915ec9335046755d489a14472f2.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css" />
 <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
 <style>
 html, body {
     margin: 0;
     padding: 0;
-    font-family: Poppins, sans-serif;
+    font-family: Arial, sans-serif;
     background: #000;
-    color: #fff;
+    color: white;
     text-align: center;
+}
+
+.video-container {
+    position: relative;
+    width: 90%;
+    margin: 20px auto;
+    border: 2px solid #28B463;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .video {
     width: 100%;
-    max-width: 90vw; /* Ensure the video fits within 90% of the viewport width */
-    max-height: 50vh; /* Limit the height to 50% of the viewport height */
-    margin: 20px auto;
-    display: block;
-    border: 2px solid #28B463;
     border-radius: 10px;
-    transition: transform 0.5s ease; /* Smooth rotation transition */
+    transition: transform 0.5s ease;
+}
+
+.fullscreen-rotate {
+    transform: rotate(90deg);
 }
 
 .fullscreen-btn {
@@ -45,215 +44,77 @@ html, body {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .fullscreen-btn:hover {
-    background: #1f9e4d;
+    background-color: #1f9e4d;
 }
-
-.youtube-link {
-    margin-top: 20px;
-    padding: 10px 0;
-}
-
-.youtube-link a {
-    color: #28B463;
-    font-size: 24px; /* Increased font size */
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.youtube-link a:hover {
-    color: #fff;
-}
-
-marquee h2 {
-    font-size: 18px; /* Increased font size */
-    font-weight: bold;
-    margin: 20px 0;
-}
-
-/* Pop-Up Styling */
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.95);
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    z-index: 10000; /* Ensure it appears above all content */
-    padding: 50px; /* Increased padding */
-    width: 80%; /* Make the pop-up larger */
-    max-width: 500px; /* Ensure it doesn't exceed a reasonable size */
-}
-
-.popup h2 {
-    font-size: 26px; /* Much bigger heading size */
-    margin: 0 0 30px 0; /* Increased margin */
-}
-
-.popup p {
-    font-size: 22px; /* Larger description text */
-    margin: 0 0 30px 0; /* Increased margin */
-}
-
-.popup button {
-    margin: 20px;
-    padding: 20px 25px; /* Larger buttons */
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.popup button:hover {
-    background: #28B463;
-    color: white;
-}
-
-.popup .close-btn {
-    background: #f44336;
-    color: white;
-}
-
-/* Disable interaction with the rest of the page while pop-up is active */
-body.no-scroll {
-    overflow: hidden;
-}
-
 </style>
-
-<script>
-    // Prevent embedding
-    if (window.top !== window.self) {
-        window.location.href = "https://example.com"; // Redirect if embedded
-    }
-
-    // Display a full-screen pop-up that users must interact with
-    window.addEventListener("load", function() {
-        // Create the popup element
-        var popup = document.createElement("div");
-        popup.className = "popup";
-
-        // Set the popup content
-        popup.innerHTML = `
-            <h2>Support Us!</h2>
-            <p>Join our Telegram channel <br>@cricketguru071 for more updates.</p>
-            <button id="joinButton">Join Now</button>
-            <button id="closeButton" class="close-btn">Already Joined</button>
-        `;
-
-        // Append the popup to the body
-        document.body.appendChild(popup);
-
-        // Disable scrolling while the pop-up is active
-        document.body.classList.add("no-scroll");
-
-        // Add click event to the Join Now button
-        document.getElementById("joinButton").addEventListener("click", function() {
-            window.location.href = "https://t.me/+xl-C7GFGTkM4MDk5";
-        });
-
-        // Add click event to the Already Joined button to close the popup
-        document.getElementById("closeButton").addEventListener("click", function() {
-            document.body.removeChild(popup);
-
-            // Re-enable scrolling after the pop-up is closed
-            document.body.classList.remove("no-scroll");
-        });
-    });
-
-    // Video player initialization
-    document.addEventListener("DOMContentLoaded", () => {
-        const video = document.querySelector("video");
-        const source = video.querySelector("source").src;
-        const hlsConfig = { maxMaxBufferLength: 100 };
-
-        if (Hls.isSupported()) {
-            const hls = new Hls(hlsConfig);
-            hls.loadSource(source);
-            hls.attachMedia(video);
-
-            hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-                const qualityOptions = data.levels.map((level) => level.height);
-                new Plyr(video, {
-                    quality: {
-                        default: qualityOptions[0],
-                        options: qualityOptions,
-                        forced: true,
-                        onChange: (newQuality) => {
-                            hls.levels.forEach((level, index) => {
-                                if (level.height === newQuality) {
-                                    hls.currentLevel = index;
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-        } else {
-            new Plyr(video);
-        }
-    });
-
-    // Function to enter fullscreen and rotate the video when the fullscreen button is clicked
-    let rotateAngle = 0;
-    document.getElementById('fullscreenButton').addEventListener('click', function() {
-        const videoElement = document.querySelector('.video');
-
-        // Rotate the video by 90 degrees
-        rotateAngle += 90;
-        videoElement.style.transform = `rotate(${rotateAngle}deg)`; 
-
-        // Go fullscreen
-        if (videoElement.requestFullscreen) {
-            videoElement.requestFullscreen();
-        } else if (videoElement.mozRequestFullScreen) { // Firefox
-            videoElement.mozRequestFullScreen();
-        } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            videoElement.webkitRequestFullscreen();
-        } else if (videoElement.msRequestFullscreen) { // IE/Edge
-            videoElement.msRequestFullscreen();
-        }
-    });
-
-</script>
-
 </head>
 <body>
 
-<video class="video" autoplay controls crossorigin poster="https://graph.org/file/f7df3ed4a92c7ee46ba4d-fc92b8b889ddba640e.jpg">
-    <source id="m3u8-url" src="" type="application/x-mpegURL" />
-</video>
-
-<button id="fullscreenButton" class="fullscreen-btn">Fullscreen & Rotate Video</button>
-
-<div class="youtube-link">
-    <a href="https://t.me/+xl-C7GFGTkM4MDk5" target="_blank">Join our Telegram Channel</a>
+<div class="video-container">
+    <video class="video" id="videoPlayer" controls crossorigin>
+        <source id="m3u8-url" src="" type="application/x-mpegURL">
+    </video>
 </div>
-<font>
-    Copyright Disclaimer 
-</font>
-<marquee>
-    <h2>
-        <font color="red">
-We does not stream any of the channels included in this website, all the streaming links are from third party website available freely on the internet.We're just giving way to stream and all content is the copyright of their owner.
-        </font>
-    </h2>
-</marquee>
+
+<button id="fullscreenButton" class="fullscreen-btn">Fullscreen & Rotate</button>
 
 <script>
-    var urlParams = new URLSearchParams(window.location.search);
-    var videoSrc = urlParams.get('dtv');
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.querySelector(".video");
+    const fullscreenButton = document.getElementById("fullscreenButton");
+    let isFullscreen = false;
+
+    // Add click event to the fullscreen button
+    fullscreenButton.addEventListener("click", () => {
+        if (!isFullscreen) {
+            // Enter fullscreen mode
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) { // Safari
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { // IE11
+                video.msRequestFullscreen();
+            }
+
+            // Add rotation
+            video.classList.add("fullscreen-rotate");
+        } else {
+            // Exit fullscreen mode
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) { // Safari
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE11
+                document.msExitFullscreen();
+            }
+
+            // Remove rotation
+            video.classList.remove("fullscreen-rotate");
+        }
+
+        // Toggle fullscreen state
+        isFullscreen = !isFullscreen;
+    });
+
+    // Update video source dynamically if "dtv" query parameter is provided
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoSrc = urlParams.get("dtv");
     if (videoSrc) {
         document.getElementById("m3u8-url").src = videoSrc;
+        const hlsConfig = { maxMaxBufferLength: 100 };
+
+        // Initialize HLS.js if supported
+        if (Hls.isSupported()) {
+            const hls = new Hls(hlsConfig);
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+        }
     }
+});
 </script>
 
 </body>
