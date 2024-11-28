@@ -33,7 +33,7 @@ html, body {
     display: block;
     border: 2px solid #28B463;
     border-radius: 10px;
-    transition: transform 0.5s; /* Smooth transition for rotation */
+    transition: transform 0.5s ease; /* Smooth rotation transition */
 }
 
 .rotate-btn {
@@ -208,6 +208,14 @@ body.no-scroll {
         const videoElement = document.querySelector('.video');
         videoElement.style.transform = `rotate(${rotateAngle}deg)`; // Apply the rotation
     });
+
+    // Handling mobile orientation changes
+    window.addEventListener('orientationchange', function() {
+        if (window.innerHeight > window.innerWidth) {
+            document.querySelector('.video').style.transform = 'rotate(0deg)';
+        }
+    });
+
 </script>
 
 </head>
