@@ -78,13 +78,20 @@
             padding: 20px;
         }
 
+        .player-wrapper {
+            width: 90%; /* Increase the player's width */
+            height: 320px; /* Decrease the player's height */
+            margin: 0 auto;
+            border: 5px solid #28B463; /* Green border */
+            border-radius: 15px;
+            background-color: #000; /* Background color behind the video */
+            overflow: hidden; /* Ensure content stays inside the border */
+        }
+
         video {
-            width: 100%; /* Full width of the screen */
-            height: 300px; /* Reduced height */
-            max-width: 1920px; /* Optional: prevent it from becoming too large */
-            border: 3px solid #28B463; /* Green border */
-            border-radius: 10px;
-            object-fit: cover; /* Ensures video fills the container */
+            width: 100%; /* Full width of the green border */
+            height: 100%; /* Full height of the green border */
+            object-fit: cover; /* Ensure proper scaling inside the container */
         }
 
         .telegram-button {
@@ -126,9 +133,11 @@
     </div>
 
     <div class="player-container">
-        <video autoplay controls crossorigin poster="https://graph.org/file/f7df3ed4a92c7ee46ba4d-fc92b8b889ddba640e.jpg" playsinline style="--plyr-color-main: #28B463;">
-            <source id="m3u8-url" src="" type="application/x-mpegURL" />
-        </video>
+        <div class="player-wrapper">
+            <video autoplay controls crossorigin poster="https://graph.org/file/f7df3ed4a92c7ee46ba4d-fc92b8b889ddba640e.jpg" playsinline style="--plyr-color-main: #28B463;">
+                <source id="m3u8-url" src="" type="application/x-mpegURL" />
+            </video>
+        </div>
 
         <div class="telegram-button">
             <a href="https://t.me/yourchannel" target="_blank">Join Our Telegram Channel</a>
