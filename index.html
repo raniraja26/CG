@@ -116,6 +116,24 @@ marquee h2 {
 body.no-scroll {
     overflow: hidden;
 }
+
+/* Custom full-screen button */
+#fullscreen-btn {
+    background-color: #0074d9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+#fullscreen-btn:hover {
+    background-color: #005bb5;
+}
 </style>
 
 <script>
@@ -189,7 +207,32 @@ body.no-scroll {
         } else {
             new Plyr(video);
         }
+
+        // Add custom full-screen functionality
+        const fullscreenBtn = document.createElement("button");
+        fullscreenBtn.id = "fullscreen-btn";
+        fullscreenBtn.innerHTML = "Full-Screen";
+        document.body.appendChild(fullscreenBtn);
+
+        fullscreenBtn.addEventListener("click", () => {
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.mozRequestFullScreen) { // Firefox
+                video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { // IE/Edge
+                video.msRequestFullscreen();
+            }
+        });
     });
+
+    // Video URL handling
+    var urlParams = new URLSearchParams(window.location.search);
+    var videoSrc = urlParams.get('dtv');
+    if (videoSrc) {
+        document.getElementById("m3u8-url").src = videoSrc;
+    }
 </script>
 </head>
 <body>
@@ -211,14 +254,6 @@ We do not stream any of the channels included in this website, all the streaming
         </font>
     </h2>
 </marquee>
-
-<script>
-    var urlParams = new URLSearchParams(window.location.search);
-    var videoSrc = urlParams.get('dtv');
-    if (videoSrc) {
-        document.getElementById("m3u8-url").src = videoSrc;
-    }
-</script>
 
 </body>
 </html>
