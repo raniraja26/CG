@@ -79,11 +79,12 @@
         }
 
         video {
-            width: 90%; /* Increase video width */
-            height: 200px; /* Decrease video height */
+            width: 100%; /* Full width of the screen */
+            height: 300px; /* Reduced height */
+            max-width: 1920px; /* Optional: prevent it from becoming too large */
             border: 3px solid #28B463; /* Green border */
             border-radius: 10px;
-            max-width: 1200px; /* Limit the width on larger screens */
+            object-fit: cover; /* Ensures video fills the container */
         }
 
         .telegram-button {
