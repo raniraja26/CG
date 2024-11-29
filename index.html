@@ -26,20 +26,19 @@ html, body {
 }
 
 .video {
-    width: 100%; /* Use full width of the container */
-    max-width: 600px; /* Reduce max width for smaller player size */
-    height: auto; /* Maintain aspect ratio */
-    margin: 10px auto; /* Adjust margin for better positioning */
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 10px auto;
     display: block;
     border: 2px solid #28B463;
     border-radius: 10px;
-    transition: transform 0.3s ease;
 }
 
 @media (max-width: 480px) {
     .video {
-        width: 90%; /* Reduce width on very small screens */
-        max-width: 300px; /* Further reduce the size for small devices */
+        width: 90%;
+        max-width: 300px;
     }
 }
 
@@ -50,7 +49,7 @@ html, body {
 
 .youtube-link a {
     color: #28B463;
-    font-size: 24px; /* Increased font size */
+    font-size: 24px;
     font-weight: bold;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -61,7 +60,7 @@ html, body {
 }
 
 marquee h2 {
-    font-size: 18px; /* Increased font size */
+    font-size: 18px;
     font-weight: bold;
     margin: 20px 0;
 }
@@ -77,25 +76,25 @@ marquee h2 {
     border-radius: 15px;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
     text-align: center;
-    z-index: 10000; /* Ensure it appears above all content */
-    padding: 50px; /* Increased padding */
-    width: 80%; /* Make the pop-up larger */
-    max-width: 500px; /* Ensure it doesn't exceed a reasonable size */
+    z-index: 10000;
+    padding: 50px;
+    width: 80%;
+    max-width: 500px;
 }
 
 .popup h2 {
-    font-size: 26px; /* Much bigger heading size */
-    margin: 0 0 30px 0; /* Increased margin */
+    font-size: 26px;
+    margin: 0 0 30px 0;
 }
 
 .popup p {
-    font-size: 22px; /* Larger description text */
-    margin: 0 0 30px 0; /* Increased margin */
+    font-size: 22px;
+    margin: 0 0 30px 0;
 }
 
 .popup button {
     margin: 20px;
-    padding: 20px 25px; /* Larger buttons */
+    padding: 20px 25px;
     font-size: 18px;
     border: none;
     border-radius: 8px;
@@ -113,27 +112,25 @@ marquee h2 {
     color: white;
 }
 
+/* New styles for Join Now button */
+#joinButton {
+    background: white; /* White background */
+    color: #39ff14; /* Neon green text */
+    text-transform: uppercase; /* Capital letters */
+    border: 2px solid #39ff14; /* Neon green border */
+    font-weight: bold; /* Bold font */
+    padding: 15px 30px; /* Adjust padding for better spacing */
+    cursor: pointer; /* Pointer cursor */
+}
+
+#joinButton:hover {
+    background: #39ff14; /* Neon green hover background */
+    color: white; /* White text on hover */
+}
+
 /* Disable interaction with the rest of the page while pop-up is active */
 body.no-scroll {
     overflow: hidden;
-}
-
-/* Custom full-screen button */
-#fullscreen-btn {
-    background-color: #0074d9;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-}
-
-#fullscreen-btn:hover {
-    background-color: #005bb5;
 }
 </style>
 
@@ -208,41 +205,7 @@ body.no-scroll {
         } else {
             new Plyr(video);
         }
-
-        // Add custom full-screen functionality
-        const fullscreenBtn = document.createElement("button");
-        fullscreenBtn.id = "fullscreen-btn";
-        fullscreenBtn.innerHTML = "Full-Screen";
-        document.body.appendChild(fullscreenBtn);
-
-        fullscreenBtn.addEventListener("click", () => {
-            if (video.requestFullscreen) {
-                // Enter full-screen mode
-                video.requestFullscreen();
-                document.body.style.transform = "rotate(90deg)";
-                document.body.style.transition = "transform 0.3s ease";
-            } else if (video.mozRequestFullScreen) { // Firefox
-                video.mozRequestFullScreen();
-                document.body.style.transform = "rotate(90deg)";
-                document.body.style.transition = "transform 0.3s ease";
-            } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
-                video.webkitRequestFullscreen();
-                document.body.style.transform = "rotate(90deg)";
-                document.body.style.transition = "transform 0.3s ease";
-            } else if (video.msRequestFullscreen) { // IE/Edge
-                video.msRequestFullscreen();
-                document.body.style.transform = "rotate(90deg)";
-                document.body.style.transition = "transform 0.3s ease";
-            }
-        });
     });
-
-    // Video URL handling
-    var urlParams = new URLSearchParams(window.location.search);
-    var videoSrc = urlParams.get('dtv');
-    if (videoSrc) {
-        document.getElementById("m3u8-url").src = videoSrc;
-    }
 </script>
 </head>
 <body>
@@ -264,6 +227,14 @@ We do not stream any of the channels included in this website, all the streaming
         </font>
     </h2>
 </marquee>
+
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var videoSrc = urlParams.get('dtv');
+    if (videoSrc) {
+        document.getElementById("m3u8-url").src = videoSrc;
+    }
+</script>
 
 </body>
 </html>
