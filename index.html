@@ -79,8 +79,9 @@
         }
 
         .player-wrapper {
-            width: 90%; /* Increase the player's width */
-            height: 320px; /* Decrease the player's height */
+            width: 100%; /* Make player full width */
+            max-width: 1400px; /* Restrict max width for larger screens */
+            height: 320px; /* Player height */
             margin: 0 auto;
             border: 5px solid #28B463; /* Green border */
             border-radius: 15px;
@@ -91,7 +92,7 @@
         video {
             width: 100%; /* Full width of the green border */
             height: 100%; /* Full height of the green border */
-            object-fit: cover; /* Ensure proper scaling inside the container */
+            object-fit: fill; /* Ensure the video fills the container */
         }
 
         .telegram-button {
