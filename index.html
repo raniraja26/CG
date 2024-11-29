@@ -1,96 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player with Rotation</title>
-  <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+<title>CRICKET GURU</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="ENJOY FREE LIVE">
+<meta name="keywords" content="SPORTS">
+<meta name="author" content="Cricket Guru">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="shortcut icon" type="image/x-icon" href="https://i.ibb.co/37fVLxB/f4027915ec9335046755d489a14472f2.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css" />
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins, sans-serif;
+    background: #000;
+    color: #fff;
+    text-align: center;
+}
+
+.video {
+    width: 100%; /* Use full width of the container */
+    max-width: 600px; /* Reduce max width for smaller player size */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px auto; /* Adjust margin for better positioning */
+    display: block;
+    border: 2px solid #28B463;
+    border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+    .video {
+        width: 90%; /* Reduce width on very small screens */
+        max-width: 300px; /* Further reduce the size for small devices */
+    }
+}
+
+.youtube-link {
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.youtube-link a {
+    color: #28B463;
+    font-size: 24px; /* Increased font size */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.youtube-link a:hover {
+    color: #fff;
+}
+
+marquee h2 {
+    font-size: 18px; /* Increased font size */
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+/* Pop-Up Styling */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    z-index: 10000; /* Ensure it appears above all content */
+    padding: 50px; /* Increased padding */
+    width: 80%; /* Make the pop-up larger */
+    max-width: 500px; /* Ensure it doesn't exceed a reasonable size */
+}
+
+.popup h2 {
+    font-size: 26px; /* Much bigger heading size */
+    margin: 0 0 30px 0; /* Increased margin */
+}
+
+.popup p {
+    font-size: 22px; /* Larger description text */
+    margin: 0 0 30px 0; /* Increased margin */
+}
+
+.popup button {
+    margin: 20px;
+    padding: 20px 25px; /* Larger buttons */
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.popup button:hover {
+    background: #28B463;
+    color: white;
+}
+
+.popup .close-btn {
+    background: #f44336;
+    color: white;
+}
+
+/* Disable interaction with the rest of the page while pop-up is active */
+body.no-scroll {
+    overflow: hidden;
+}
+</style>
+
+<script>
+    // Prevent embedding
+    if (window.top !== window.self) {
+        window.location.href = "https://example.com"; // Redirect if embedded
     }
 
-    #video-container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 16/9;
-      background-color: #000;
-    }
+    // Display a full-screen pop-up that users must interact with
+    window.addEventListener("load", function() {
+        // Create the popup element
+        var popup = document.createElement("div");
+        popup.className = "popup";
 
-    #rotate-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      background-color: #0074d9;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        // Set the popup content
+        popup.innerHTML = `
+            <h2>Support Us!</h2>
+            <p>Join our Telegram channel <br>@cricketguru071 for more updates.</p>
+            <button id="joinButton">Join Now</button>
+            <button id="closeButton" class="close-btn">Already Joined</button>
+        `;
 
-    #rotate-button:hover {
-      background-color: #005bb5;
-    }
-  </style>
+        // Append the popup to the body
+        document.body.appendChild(popup);
+
+        // Disable scrolling while the pop-up is active
+        document.body.classList.add("no-scroll");
+
+        // Add click event to the Join Now button
+        document.getElementById("joinButton").addEventListener("click", function() {
+            window.location.href = "https://t.me/+xl-C7GFGTkM4MDk5";
+        });
+
+        // Add click event to the Already Joined button to close the popup
+        document.getElementById("closeButton").addEventListener("click", function() {
+            document.body.removeChild(popup);
+
+            // Re-enable scrolling after the pop-up is closed
+            document.body.classList.remove("no-scroll");
+        });
+    });
+
+    // Video player initialization
+    document.addEventListener("DOMContentLoaded", () => {
+        const video = document.querySelector("video");
+        const source = video.querySelector("source").src;
+        const hlsConfig = { maxMaxBufferLength: 100 };
+
+        if (Hls.isSupported()) {
+            const hls = new Hls(hlsConfig);
+            hls.loadSource(source);
+            hls.attachMedia(video);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                const qualityOptions = data.levels.map((level) => level.height);
+                new Plyr(video, {
+                    quality: {
+                        default: qualityOptions[0],
+                        options: qualityOptions,
+                        forced: true,
+                        onChange: (newQuality) => {
+                            hls.levels.forEach((level, index) => {
+                                if (level.height === newQuality) {
+                                    hls.currentLevel = index;
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        } else {
+            new Plyr(video);
+        }
+    });
+</script>
 </head>
 <body>
 
-  <div id="video-container">
-    <div id="video"></div>
-  </div>
-  <button id="rotate-button">Rotate 90°</button>
+<video class="video" autoplay controls crossorigin poster="https://graph.org/file/f7df3ed4a92c7ee46ba4d-fc92b8b889ddba640e.jpg">
+    <source id="m3u8-url" src="" type="application/x-mpegURL" />
+</video>
 
-  <script>
-    let rotationAngle = 0; // Initialize the rotation angle
-    const videoContainer = document.getElementById('video-container');
+<div class="youtube-link">
+    <a href="https://t.me/+xl-C7GFGTkM4MDk5" target="_blank">Join our Telegram Channel</a>
+</div>
+<font>
+    Copyright Disclaimer 
+</font>
+<marquee>
+    <h2>
+        <font color="red">
+We do not stream any of the channels included in this website, all the streaming links are from third party websites available freely on the internet. We're just giving way to stream, and all content is the copyright of their owner.
+        </font>
+    </h2>
+</marquee>
 
-    // Get video URL dynamically
-    function getVideoUrlFromDomain() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('videoUrl') || 'https://cdn.jwplayer.com/manifests/yp34SRmf.m3u8'; // Default video if none provided
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var videoSrc = urlParams.get('dtv');
+    if (videoSrc) {
+        document.getElementById("m3u8-url").src = videoSrc;
     }
-
-    // Initialize JWPlayer
-    const player = jwplayer("video").setup({
-      width: "100%",
-      height: "100%",
-      autostart: true,
-      mute: false,
-      file: getVideoUrlFromDomain()
-    });
-
-    // Rotate button functionality
-    document.getElementById('rotate-button').addEventListener('click', () => {
-      rotationAngle = (rotationAngle + 90) % 360; // Increment angle by 90 degrees
-      videoContainer.style.transform = `rotate(${rotationAngle}deg)`;
-      videoContainer.style.transition = 'transform 0.3s ease'; // Smooth rotation transition
-    });
-
-    // Fullscreen support with rotation
-    document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) {
-        videoContainer.style.transform = `rotate(${rotationAngle}deg)`;
-      } else {
-        videoContainer.style.transform = `rotate(${rotationAngle}deg)`;
-      }
-    });
-  </script>
-
-  <div style="background-color: #0074d9; text-align: center; padding: 10px; margin-top: 20px;">
-    <a href="https://telegram.me/CricStreamLine365" target="_blank">
-      <button style="background-color: #fff; color: #0074d9; border: 2px solid #0074d9; padding: 5px 10px;">Join Telegram</button>
-    </a>
-  </div>
+</script>
 
 </body>
 </html>
