@@ -33,6 +33,7 @@ html, body {
     display: block;
     border: 2px solid #28B463;
     border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
 @media (max-width: 480px) {
@@ -216,13 +217,22 @@ body.no-scroll {
 
         fullscreenBtn.addEventListener("click", () => {
             if (video.requestFullscreen) {
+                // Enter full-screen mode
                 video.requestFullscreen();
+                document.body.style.transform = "rotate(90deg)";
+                document.body.style.transition = "transform 0.3s ease";
             } else if (video.mozRequestFullScreen) { // Firefox
                 video.mozRequestFullScreen();
+                document.body.style.transform = "rotate(90deg)";
+                document.body.style.transition = "transform 0.3s ease";
             } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
                 video.webkitRequestFullscreen();
+                document.body.style.transform = "rotate(90deg)";
+                document.body.style.transition = "transform 0.3s ease";
             } else if (video.msRequestFullscreen) { // IE/Edge
                 video.msRequestFullscreen();
+                document.body.style.transform = "rotate(90deg)";
+                document.body.style.transition = "transform 0.3s ease";
             }
         });
     });
