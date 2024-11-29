@@ -48,89 +48,20 @@ html, body {
 }
 
 .youtube-link a {
-    color: #28B463;
+    background: white; /* White rectangular background */
+    color: #39ff14; /* Neon green text */
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
-    transition: color 0.3s ease;
+    text-transform: uppercase; /* Capital letters */
+    padding: 15px 30px; /* Padding for button effect */
+    border-radius: 5px; /* Rounded corners */
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .youtube-link a:hover {
-    color: #fff;
-}
-
-marquee h2 {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 20px 0;
-}
-
-/* Pop-Up Styling */
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.95);
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    z-index: 10000;
-    padding: 50px;
-    width: 80%;
-    max-width: 500px;
-}
-
-.popup h2 {
-    font-size: 26px;
-    margin: 0 0 30px 0;
-}
-
-.popup p {
-    font-size: 22px;
-    margin: 0 0 30px 0;
-}
-
-.popup button {
-    margin: 20px;
-    padding: 20px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.popup button:hover {
-    background: #28B463;
-    color: white;
-}
-
-.popup .close-btn {
-    background: #f44336;
-    color: white;
-}
-
-/* New styles for Join Now button */
-#joinButton {
-    background: white; /* White background */
-    color: #39ff14; /* Neon green text */
-    text-transform: uppercase; /* Capital letters */
-    border: 2px solid #39ff14; /* Neon green border */
-    font-weight: bold; /* Bold font */
-    padding: 15px 30px; /* Adjust padding for better spacing */
-    cursor: pointer; /* Pointer cursor */
-}
-
-#joinButton:hover {
-    background: #39ff14; /* Neon green hover background */
+    background: #39ff14; /* Neon green background on hover */
     color: white; /* White text on hover */
-}
-
-/* Disable interaction with the rest of the page while pop-up is active */
-body.no-scroll {
-    overflow: hidden;
 }
 </style>
 
@@ -139,73 +70,6 @@ body.no-scroll {
     if (window.top !== window.self) {
         window.location.href = "https://example.com"; // Redirect if embedded
     }
-
-    // Display a full-screen pop-up that users must interact with
-    window.addEventListener("load", function() {
-        // Create the popup element
-        var popup = document.createElement("div");
-        popup.className = "popup";
-
-        // Set the popup content
-        popup.innerHTML = `
-            <h2>Support Us!</h2>
-            <p>Join our Telegram channel <br>@cricketguru071 for more updates.</p>
-            <button id="joinButton">Join Now</button>
-            <button id="closeButton" class="close-btn">Already Joined</button>
-        `;
-
-        // Append the popup to the body
-        document.body.appendChild(popup);
-
-        // Disable scrolling while the pop-up is active
-        document.body.classList.add("no-scroll");
-
-        // Add click event to the Join Now button
-        document.getElementById("joinButton").addEventListener("click", function() {
-            window.location.href = "https://t.me/+xl-C7GFGTkM4MDk5";
-        });
-
-        // Add click event to the Already Joined button to close the popup
-        document.getElementById("closeButton").addEventListener("click", function() {
-            document.body.removeChild(popup);
-
-            // Re-enable scrolling after the pop-up is closed
-            document.body.classList.remove("no-scroll");
-        });
-    });
-
-    // Video player initialization
-    document.addEventListener("DOMContentLoaded", () => {
-        const video = document.querySelector("video");
-        const source = video.querySelector("source").src;
-        const hlsConfig = { maxMaxBufferLength: 100 };
-
-        if (Hls.isSupported()) {
-            const hls = new Hls(hlsConfig);
-            hls.loadSource(source);
-            hls.attachMedia(video);
-
-            hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-                const qualityOptions = data.levels.map((level) => level.height);
-                new Plyr(video, {
-                    quality: {
-                        default: qualityOptions[0],
-                        options: qualityOptions,
-                        forced: true,
-                        onChange: (newQuality) => {
-                            hls.levels.forEach((level, index) => {
-                                if (level.height === newQuality) {
-                                    hls.currentLevel = index;
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-        } else {
-            new Plyr(video);
-        }
-    });
 </script>
 </head>
 <body>
@@ -230,7 +94,7 @@ We do not stream any of the channels included in this website, all the streaming
 
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var videoSrc = urlParams.get('dtv');
+    var videoSrc = urlParams.get('CG'); // Changed parameter from 'dtv' to 'CG'
     if (videoSrc) {
         document.getElementById("m3u8-url").src = videoSrc;
     }
